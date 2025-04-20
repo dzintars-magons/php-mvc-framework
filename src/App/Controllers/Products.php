@@ -2,12 +2,13 @@
 
 namespace App\Controllers;
 
+use App\Models\Product;
+
 class Products
 {
     //methods inside controllers are known as actions or action methods
     public function index()
     {
-        require "src/models/product.php";
         //create an object of that class
         $model = new Product;
         // call the getData() method on that object, assigning its return value to a variable
