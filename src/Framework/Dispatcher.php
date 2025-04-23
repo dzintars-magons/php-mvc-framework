@@ -23,8 +23,8 @@ class Dispatcher
         // This is deciding which controller action method to run based on the query string, 
         // creating the controller object and running the action method dynamically
 
-        $action = $params['action'];
-        $controller = "App\Controllers\\" . ucwords($params['controller']);
+        $action = $this->getActionName($params);
+        $controller = $this->getControllerName($params);
 
         // We require the controller based on the controller variable, 
         // inserting the value of the controller variable directly into this path using string interpolation
@@ -49,5 +49,25 @@ class Dispatcher
         }
 
         return $args;
+    }
+
+    private function getControllerName(array $params):string
+    {
+        $controller = $params["controller"];
+
+        $controller = str_replace("-", "", ucwords(strtolower($controller), "-"));
+
+        $namespace = "App\Controllers";
+
+        return $namespace . "\\" . $controller;
+    }
+
+    private function getActionName(array $params): string
+    {
+        $action = $params["action"];
+
+        $action = lcfirst(str_replace("-", "", ucwords(strtolower($action), "-")));
+
+        return $action;
     }
 }
