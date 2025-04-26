@@ -18,20 +18,8 @@ class Dispatcher
             exit("No route matched!");
         }
 
-        // All the request are going throught the FRONT CONTROLLER
-        //Every single request goes through here
-        // This is deciding which controller action method to run based on the query string, 
-        // creating the controller object and running the action method dynamically
-
         $action = $this->getActionName($params);
         $controller = $this->getControllerName($params);
-
-        // We require the controller based on the controller variable, 
-        // inserting the value of the controller variable directly into this path using string interpolation
-        // require "src/controllers/$controller.php";
-
-
-        //create a new controller object based on a variable
         $controller_object = new $controller;
         $args = $this->getActionArguments($controller, $action, $params);
         $controller_object->$action(...$args);
