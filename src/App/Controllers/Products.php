@@ -17,6 +17,10 @@ class Products
 
         $viewer = new Viewer;
 
+        echo $viewer->render("shared/header.php", [
+            "title" => "Products"
+        ]);
+
         echo $viewer->render("Products/index.php", [
             "products" => $products
         ]);
@@ -25,6 +29,10 @@ class Products
     public function show(string $id)
     {
         $viewer = new Viewer;
+
+        echo $viewer->render("shared/header.php", [
+            "title" => "product with id: $id"
+        ]);
 
         echo $viewer->render("Products/show.php", [
             "id" => $id
