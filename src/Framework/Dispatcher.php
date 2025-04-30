@@ -3,6 +3,7 @@
 namespace Framework;
 
 use ReflectionMethod;
+use ReflectionClass;
 
 class Dispatcher
 {
@@ -20,7 +21,16 @@ class Dispatcher
 
         $action = $this->getActionName($params);
         $controller = $this->getControllerName($params);
-        $controller_object = new $controller;
+        $reflector = new ReflectionClass($controller);
+        $constructor = $reflector->getConstructor();
+        $dependencies = [];
+        if ($constructor !== null) {
+            foreach ($constructor->getParameters() as $parameter) {
+                $type = (string) $parameter->getType();
+                $dependencies[] = new $type;
+            }
+        }
+        $controller_object = new $controller(...$dependencies);
         $args = $this->getActionArguments($controller, $action, $params);
         $controller_object->$action(...$args);
     }
