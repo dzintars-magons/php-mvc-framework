@@ -26,7 +26,12 @@ class Container
             return new $class_name;
         }
         foreach ($constructor->getParameters() as $parameter) {
-            $type = (string) $parameter->getType();
+            $type = $parameter->getType();
+            if ($type->isBuiltin()) {
+                exit("Unable to resolve constructor parameter
+                    '{$parameter->getName()}'
+                    of type '$type' in the $class_name class");
+            }
             $dependencies[] = $this->get($type);
         }
         
