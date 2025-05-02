@@ -20,10 +20,12 @@ $router->add("/", ["controller" => "home", "action" => "index"]);
 $router->add("/{controller}/{action}");
 
 $container = new Framework\Container;
-$database = new App\Database("localhost", "product_db", "product_db_user", "secret");
 //we are binding the value for the database class to the service container
 //Now when any class needs App\Database , the container can provide the same instance
-$container->set(App\Database::class, $database);
+//we are storing anonymous functions in the container's registry
+$container->set(App\Database::class, function() {
+    return new App\Database("localhost", "product_db", "product_db_user", "secret");
+});
 //$router and $container have been injected into the Dispatcher class via the constructor method
 $dispatcher = new Framework\Dispatcher($router, $container);
 $dispatcher->handle($path);
