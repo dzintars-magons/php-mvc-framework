@@ -7,6 +7,7 @@ namespace Framework;
 use ReflectionClass;
 use Closure;
 use ReflectionNamedType;
+use Exception;
 
 class Container
 {
@@ -31,7 +32,7 @@ class Container
         foreach ($constructor->getParameters() as $parameter) {
             $type = $parameter->getType();
             if ($type === null) {
-                exit("Constructor parameter '{$parameter->getName()}'
+                throw new Exception("Constructor parameter '{$parameter->getName()}'
                 in the $class_name class
                 has no type declaration");
             }
