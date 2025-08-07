@@ -32,7 +32,7 @@ $container = new Framework\Container;
 //Now when any class needs App\Database , the container can provide the same instance
 //we are storing anonymous functions in the container's registry
 $container->set(App\Database::class, function() {
-    return new App\Database("localhost", "product_db", "product_db_user", "secret");
+    return new App\Database("db", "product_db", "product_db_user", "secret");
 });
 //$router and $container have been injected into the Dispatcher class via the constructor method
 $dispatcher = new Framework\Dispatcher($router, $container);
